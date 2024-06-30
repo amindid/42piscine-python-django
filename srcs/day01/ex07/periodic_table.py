@@ -7,9 +7,9 @@ def parse_line(line):
 def main():
     try:
         with open("./periodic_table.txt") as file:
+            elements = []
             for line in file:
-                elements = parse_line(line)
-                print(elements)
+                elements.append(parse_line(line))
     except Exception as e:
         print(f"exception accurred: {e}")
 
@@ -42,9 +42,21 @@ def main():
     body = ""
     pos = 0
     for element in elements:
-        if element["position"] == 0:
-            body = "<tr>"
-
+        if element["position"] == "0":
+            body += "<tr>"
+        if pos < int(element["position"]):
+            while pos < int(element["position"]):
+                body += "<td></td>\n"
+                pos += 1
+        body += CELL.format(**element)
+        if element["position"] == "17":
+            body += "</tr>"
+            pos = 0
+        else:
+            pos += 1
+    HTML = HTML.format(body=body)
+    with open("./periodic_table.html", "w") as output:
+        output.write(HTML)
 
 if __name__ == "__main__":
     main()
