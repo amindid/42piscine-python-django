@@ -6,13 +6,13 @@ def render():
 		sys.exit(1)
 	try:
 		HTML = ""
-		pairs = []
-		with open(sys.argv[0], "r") as template:
+		pairs = {}
+		with open(sys.argv[1], "r") as template:
 			HTML = template.read()
 		with open("./settings.py", "r") as settings:
 			for line in settings:
 				tmp = line.split("=")
-				pairs.append({tmp[0].strip(): tmp[1].strip().replace('"', '')})
+				pairs[tmp[0].strip()] = tmp[1].strip().replace('"', '')
 		with open("./result.html", "w") as result:
 			result.write(HTML.format(**pairs))
 	except Exception as e:
