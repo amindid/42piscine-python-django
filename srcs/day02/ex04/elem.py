@@ -40,7 +40,7 @@ class Elem:
         Obviously.
         """
         # [...]
-        if not (self.check_type(content) or content is None) or tag_type not in ["double", "simple"]:
+        if not (self.check_type(content) or content is None) or tag_type not in ['double', 'simple']:
             raise self.ValidationError
         self.tag = tag
         self.attr = attr
@@ -107,7 +107,7 @@ class Elem:
 
 if __name__ == '__main__':
     try:
-        elem = Elem(tag='div', attr={}, content=Elem(), tag_type='double')
+        elem = Elem(tag='html', attr={}, content=[Elem(tag='head', attr={}, content=Elem(tag='title', attr={}, content=Text("Hello ground!"),tag_type='double'), tag_type='double'),Elem(tag='body',attr={},content=[Elem(tag='h1',attr={},content=Text("Oh no, not again!"), tag_type='double'),Elem(tag='img',attr={'src':'"http://i.imgur.com/pfp3T.jpg'},content=None,tag_type='simple')],tag_type='double')], tag_type='double')
         print(elem.__str__())
     except Exception as e:
         print(e)
