@@ -12,16 +12,16 @@ class Text(str):
         """
         Do you really need a comment to understand this method?..
         """
-        string = super().__str__()
-        replace_dict = {
+        replacements = {
             '<' : '&lt;',
             '>' : '&gt;',
             '"' : '&quot;',
-            '\n' : '\n<br />\n',
+            '\n': '\n<br />\n'
         }
-        for old, new in replace_dict.items():
-            string = string.replace(old, new)
-        return string
+        result = super().__str__()
+        for old,new in replacements.items():
+            result = result.replace(old, new)
+        return result
 
 
 class Elem:
@@ -57,9 +57,9 @@ class Elem:
         elements...).
         """
         if self.tag_type == 'double':
-            result = f"<{self.tag} {self.__make_attr()}>{self.__make_content()}</{self.tag}>"
+            result = f"<{self.tag}{self.__make_attr()}>{self.__make_content()}</{self.tag}>"
         elif self.tag_type == 'simple':
-            result = f"<{self.tag} {self.__make_attr()}/>"
+            result = f"<{self.tag}{self.__make_attr()}/>"
             # [...]
         return result
 
@@ -81,7 +81,8 @@ class Elem:
             return ''
         result = '\n'
         for elem in self.content:
-            result += self.add_content(self.content)
+            result += str(elem) + '\n'
+        result = "  ".join(line for line in result.splitlines(True))
         return result
 
     def add_content(self, content):
@@ -106,7 +107,7 @@ class Elem:
 
 if __name__ == '__main__':
     try:
-        elem = Elem(tag='div', attr={}, content=Elem, tag_type='double')
+        elem = Elem(tag='div', attr={}, content=Elem(), tag_type='double')
         print(elem.__str__())
     except Exception as e:
         print(e)
