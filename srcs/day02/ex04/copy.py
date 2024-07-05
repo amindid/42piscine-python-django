@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-
 class Text(str):
     """
     A Text class to represent a text you could use with your HTML elements.
@@ -23,15 +22,14 @@ class Text(str):
             string = string.replace(old, new)
         return string
 
-
 class Elem:
     """
     Elem will permit us to represent our HTML elements.
     """
+    
     class ValidationError(Exception):
-        def __init__(self, message="validation Error") -> None:
-            self.message = message
-            super().__init__(self.message)
+        def __init__(self) -> None:
+            super().__init__("incorrect behaviour.")
 
     def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
         """
@@ -39,9 +37,8 @@ class Elem:
 
         Obviously.
         """
-        # [...]
-        if not (self.check_type(content) or content is None) or tag_type not in ["double", "simple"]:
-            raise self.ValidationError
+        if not (self.check_type(content) or content is None) or tag_type not in ['double', 'simple']:
+            raise Elem.ValidationError()
         self.tag = tag
         self.attr = attr
         self.content = []
@@ -56,11 +53,13 @@ class Elem:
         Make sure it renders everything (tag, attributes, embedded
         elements...).
         """
+        result = f'<{self.tag}{self.__make_attr()}'
         if self.tag_type == 'double':
-            result = f"<{self.tag} {self.__make_attr()}>{self.__make_content()}</{self.tag}>"
+            result += '>' + self.__make_content()
+            result += f'</{self.tag}>'
+
         elif self.tag_type == 'simple':
-            result = f"<{self.tag} {self.__make_attr()}/>"
-            # [...]
+            result += f'/>'
         return result
 
     def __make_attr(self):
@@ -68,8 +67,8 @@ class Elem:
         Here is a function to render our elements attributes.
         """
         result = ''
-        for pair in sorted(self.attr.items()):
-            result += ' ' + str(pair[0]) + '="' + str(pair[1]) + '"'
+        for k, v in sorted(self.attr.items()):
+            result += ' ' + str(k) + '="' + str(v) + '"'
         return result
 
     def __make_content(self):
@@ -77,14 +76,20 @@ class Elem:
         Here is a method to render the content, including embedded elements.
         """
 
-        if len(self.content) == 0:
+        if len((self.content)) == 0:
             return ''
         result = '\n'
         for elem in self.content:
-            result += self.add_content(self.content)
+            if (len(str(elem)) != 0):
+                result += str(elem) + '\n'
+        result = "  ".join(line for line in result.splitlines(True))
+        if len(result.strip()) == 0:
+            return ''
         return result
 
     def add_content(self, content):
+        if not content:
+            self.content.append('')
         if not Elem.check_type(content):
             raise Elem.ValidationError
         if type(content) == list:
@@ -102,11 +107,16 @@ class Elem:
                 (type(content) == list and all([type(elem) == Text or
                                                 isinstance(elem, Elem)
                                                 for elem in content])))
+    
+    def __len__(self):
+        return len(str(self))
 
 
 if __name__ == '__main__':
-    try:
-        elem = Elem(tag='div', attr={}, content=Elem, tag_type='double')
-        print(elem.__str__())
-    except Exception as e:
-        print(e)
+    print(Elem())
+    # print(Elem('div', {}, None, 'double'))
+    # print(Elem(tag='body', attr={}, content=Elem(), tag_type='double'))
+    # print(Elem(content=Elem()))
+    # print(Elem(content=[Text('foo'), Text('bar'), Elem()]))
+    # print(Elem(content=Elem(content=Elem(content=Elem()))))
+    # elem = Elem(content='')
