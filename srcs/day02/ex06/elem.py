@@ -86,8 +86,8 @@ class Elem:
         return result
 
     def add_content(self, content):
-        if not Elem.check_type(content):
-            raise Elem.ValidationError
+        if not self.check_type(content):
+            raise self.ValidationError
         if type(content) == list:
             self.content += [elem for elem in content if elem != Text('')]
         elif content != Text(''):
