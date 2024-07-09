@@ -1,13 +1,28 @@
+#!/usr/bin/python3
 import sys
+import antigravity
 
 def main():
-	if len(sys.argv) != 5:
-		print("invalid args : correct args should be : date dow x_location y_location")
+	if len(sys.argv) != 4:
+		print("invalid args : correct args should be : date_dow x_location y_location")
 		exit(1)
-	date = sys.argv[1]
-	dow = sys.argv[2]
-	x_location = sys.argv[3]
-	y_location = sys.argv[4]
+
+	try:
+		date_dow = sys.argv[1].encode('utf-8')
+	except Exception as e:
+		return(print(e))
+	try:
+		x_location = float(sys.argv[2])
+	except Exception as e:
+		return(print("x_location should be float value"))
+	try:
+		y_location = float(sys.argv[3])
+	except Exception as e:
+		return(print("y_location should be float value"))
+	try:
+		print(antigravity.geohash(date_dow, x_location, y_location))
+	except Exception as e:
+		return(print(e))
 
 if __name__ == '__main__':
 	main()
