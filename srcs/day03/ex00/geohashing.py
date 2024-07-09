@@ -20,7 +20,7 @@ def main():
 	except Exception as e:
 		return(print("y_location should be float value"))
 	try:
-		print(antigravity.geohash(date_dow, x_location, y_location))
+		print(antigravity.geohash(x_location, y_location, date_dow))
 	except Exception as e:
 		return(print(e))
 
