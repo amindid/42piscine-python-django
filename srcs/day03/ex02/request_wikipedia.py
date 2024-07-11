@@ -1,15 +1,17 @@
-import requests, json, dewiki, sys
-
+import requests, dewiki
+from sys import argv
 
 def main():
-	if len(sys.argv) != 2:
+	if len(argv) != 2:
 		print("invalid arguments")
 		exit(1)
+	words = [word.capitalize() for word in argv[1].split()]
+	title = "_".join(words)
 	wiki_endPoint = "https://en.wikipedia.org/w/api.php"
 	params = {
 		'action'      : 'query',
 		'format'      : 'json',
-		'titles'      : sys.argv[1],
+		'titles'      : title,
 		'prop'        : 'extracts',
 		'explaintext' : False
 	}
@@ -19,8 +21,8 @@ def main():
 		pages = data['query']['pages']
 		for page_id, page in pages.items():
 			try:
-				name = page['title'] + '.wiki'
-				value = page['extract']
+				name = (page['title']).replace(' ', '_') + '.wiki'
+				value = dewiki.from_string(page['extract'])
 				with open(name, 'w') as file:
 					file.write(value)
 			except Exception as e:
@@ -31,3 +33,4 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
