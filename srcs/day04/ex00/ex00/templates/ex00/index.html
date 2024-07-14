@@ -4,8 +4,180 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ex00: Markdown Cheatsheet</title>
+	<style>
+	*{
+		margin: 0;
+
+	}
+	h1,h2,p {
+		margin-left: 10px;
+	}
+        table {
+			align-self:center;
+            width: 50%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th,td {
+            padding: 12px;
+            border: 1px solid #dddddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr {
+            background-color: #ffffff;
+        }
+		body {
+			background-color: #DAFFFB;
+			font-size: 18px;
+			text-align: left;
+		}
+		footer {
+			padding: 1rem;
+			text-align: center;
+			bottom: 0;
+			background-color: grey;
+		}
+    </style>
 </head>
-<body>
+
+<body style="width: 100vw; display: flex; flex-direction: column;">
 	<h1 style="text-align: center;">Ex00: Markdown Cheatsheet</h1>
+	<h2>Overview</h2>
+	<p>Nearly all Markdown applications support the basic syntax outlined in the original Markdown design document.<br>
+	There are minor variations and discrepancies between Markdown processors
+	those are noted inline wherever possible.</p>
+	<br>
+	<h2>Headings</h2>
+	<p>To create a heading, add number signs (#) in front of a word or phrase. The number of number signs you use should correspond to the heading level.<br>For example, to create a heading level three (&lth3&gt), use three number signs (e.g., ### My Header).</p>
+	<table border="1" >
+		<thead>
+			<tr>
+				<th>Markdown</th>
+				<th>HTML</th>
+				<th>Rendered Output</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td># Heading level 1</td>
+				<td>&lth1&gtHeading level 1&lt/h1&gt</td>
+				<td><h1>Heading level 1</h1></td>
+			</tr>
+			<tr>
+				<td># Heading level 2</td>
+				<td>&lth2&gtHeading level 2&lt/h2&gt</td>
+				<td><h2>Heading level 2</h2></td>
+			</tr>
+			<tr>
+				<td># Heading level 3</td>
+				<td>&lth3&gtHeading level 3&lt/h3&gt</td>
+				<td><h3>Heading level 3</h3></td>
+			</tr>
+			<tr>
+				<td># Heading level 4</td>
+				<td>&lth4&gtHeading level 4&lt/h4&gt</td>
+				<td><h4>Heading level 4</h4></td>
+			</tr>
+			<tr>
+				<td># Heading level 5</td>
+				<td>&lth5&gtHeading level 5&lt/h5&gt</td>
+				<td><h5>Heading level 5</h5></td>
+			</tr>
+			<tr>
+				<td># Heading level 6</td>
+				<td>&lth6&gtHeading level 6&lt/h6&gt</td>
+				<td><h6>Heading level 6</h6></td>
+			</tr>
+		</tbody>
+	</table>
+	<h2>Alternate Syntax</h2>
+	<p>Alternatively, on the line below the text, add any number of == characters for heading level 1 or -- characters for<br>heading level 2.</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Markdown</th>
+				<th>HTML</th>
+				<th>Rendered Output</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Heading level 1<br>===============</td>
+				<td>&lth1&gtHeading level 1&lt/h1&gt</td>
+				<td><h1>Heading level 1</h1></td>
+			</tr>
+			<tr>
+				<td>Heading level 2<br>---------------</td>
+				<td>&lth2&gtHeading level 2&lt/h2&gt</td>
+				<td><h2>Heading level 2</h2></td>
+			</tr>
+		</tbody>
+	</table>
+	<h2>Heading Best Practices</h2>
+	<p>Markdown applications don’t agree on how to handle a missing space between the number signs (#) and the<br>
+		heading name. For compatibility, always put a space between the number signs and the heading name.</p>
+	<table>
+		<thead>
+			<tr>
+				<th>✅ Do this</th>
+				<th>❌ Dont't do this</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td># Here's a Heading</td>
+				<td>&lth1&gtHeading level 1&lt/h1&gt</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>You should also put blank lines before and after a heading for compatibility.</p>
+	<table>
+		<thead>
+			<tr>
+				<th>✅ Do this</th>
+				<th>❌ Dont't do this</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Try to put a blank line before...<br><br>
+
+					# Heading<br><br>
+					
+					...and after a heading.
+				</td>
+				<td>Without blank lines, this might not look right.<br>
+					# Heading<br>
+					Don't do this!
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<h2>Paragraph Best Practices</h2>
+	<p>Unless the paragraph is in a list, don’t indent paragraphs with spaces or tabs.</p>
+	<table>
+		<thead>
+			<tr>
+				<th>✅ Do this</th>
+				<th>❌ Dont't do this</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Don't put tabs or spaces in front of<br>your paragraphs.
+					<br>Keep lines left-aligned like this.
+				</td>
+				<td>&nbsp&nbsp&nbspThis can result in unexpected formatting<br>problems.<br>
+					&nbsp&nbsp&nbspDon't add tabs or spaces in front of<br>paragraphs.
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
 </body>
+<footer>ABARAKA 3LIYA AKHA</footer>
 </html>
