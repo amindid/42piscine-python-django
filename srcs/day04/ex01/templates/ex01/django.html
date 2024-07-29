@@ -1,0 +1,10 @@
+<!-- ex01/templates/django.html -->
+{% extends 'base.html' %}
+{% block title %}Ex01: Django, framework web{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'ex01/style1.css' %}">
+{% endblock %}
+{% block content %}
+    <h1>Django, framework web</h1>
+    <p>Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design. Created in 2003 by Adrian Holovaty and Simon Willison, it was released publicly under a BSD license in July 2005.</p>
+{% endblock %}

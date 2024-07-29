@@ -1,0 +1,10 @@
+<!-- ex01/templates/display.html -->
+{% extends 'base.html' %}
+{% block title %}Ex01: Display process of a static page{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style1.css' %}">
+{% endblock %}
+{% block content %}
+    <h1>Display process of a static page</h1>
+    <p>The process of displaying a static page in Django involves creating a URL pattern, defining a view, and rendering a template. When a request is made, the URL resolver matches the request to a view, which processes the request and returns a response, usually by rendering an HTML template.</p>
+{% endblock %}

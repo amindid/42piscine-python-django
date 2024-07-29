@@ -1,0 +1,16 @@
+<!-- ex01/templates/templates.html -->
+{% extends 'base.html' %}
+{% block title %}Ex01: Template engine{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'ex01/style2.css' %}">
+{% endblock %}
+{% block content %}
+    <h1>Template engine</h1>
+    <p>Django's template engine uses a template language to define how data is displayed. Key features include:</p>
+    <ul>
+        <li><strong>Blocks:</strong> Define sections of the template that can be overridden by child templates.</li>
+        <li><strong>Loops:</strong> Iterate over lists or dictionaries using <code>for ... in</code>.</li>
+        <li><strong>If control structures:</strong> Conditional statements to control the flow of templates.</li>
+        <li><strong>Context variables:</strong> Pass data from views to templates for dynamic content display.</li>
+    </ul>
+{% endblock %}
