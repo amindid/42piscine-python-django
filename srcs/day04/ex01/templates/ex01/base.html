@@ -1,18 +1,22 @@
 <!-- ex01/templates/base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Base Title{% endblock %}</title>
-    <style>
-        {% block style %}{% endblock %}
-    </style>
+    {% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'ex01/style1.css' %}">
+    {% endblock %}
 </head>
 <body>
-    {% include 'nav.html' %}
+    {% include './nav.html' %}
     <div id="content">
-        {% block content %}{% endblock %}
+        {% block content %}
+        <h1>Django introduction</h1>
+        <p>Django is a high-level Python web framework designed for rapid development and clean, pragmatic design.<br>It was created in 2003 by a development team at the Lawrence Journal-World newspaper to meet the fast-paced needs of a newsroom.<br>Released publicly in 2005, it has grown significantly with contributions from a strong community.<br>Key features include an object-relational mapper (ORM), an automatically generated admin interface, URL routing, a template system, and built-in security measures.<br>Django is maintained by the Django Software Foundation and is widely used in the industry.</p>
+        {% endblock %}
     </div>
 </body>
 </html>
