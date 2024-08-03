@@ -1,5 +1,6 @@
 <!-- ex01/templates/templates.html -->
-{% extends 'base.html' %}
+{% extends './base.html' %}
+{% load static %}
 {% block title %}Ex01: Template engine{% endblock %}
 {% block style %}
     <link rel="stylesheet" type="text/css" href="{% static 'ex01/style2.css' %}">
