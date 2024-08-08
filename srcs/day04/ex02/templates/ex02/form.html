@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Form</title>
+</head>
+<body>
+    <h1>My Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Submission History</h2>
+    <ul>
+        {% for submission in history %}
+            <li>{{ submission }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

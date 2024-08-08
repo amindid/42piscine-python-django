@@ -128,3 +128,4 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'somthing')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+HISTORY_FILE_PATH = os.path.join(BASE_DIR, 'ex02/history.txt')
