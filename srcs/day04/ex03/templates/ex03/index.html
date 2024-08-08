@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>colors shades</title>
+</head>
+<body style="color: white;">
+	<table>
+		<thead>
+			<th style="width:80px; height: 40px; background-color: black"> black </th>
+			<th style="width:80px; height: 40px; background-color: red"> red </th>
+			<th style="width:80px; height: 40px; background-color: blue"> blue </th>
+			<th style="width:80px; height: 40px; background-color: green"> green </th>
+		</thead>
+		<tbody>
+			{% for color in colors %}
+				<tr>
+					<td style="width:80px; height: 40px; background-color: {{color.black}}"></td>
+					<td style="width:80px; height: 40px; background-color: {{color.red}}"></td>
+					<td style="width:80px; height: 40px; background-color: {{color.blue}}"></td>
+					<td style="width:80px; height: 40px; background-color: {{color.green}}"></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+</html>
