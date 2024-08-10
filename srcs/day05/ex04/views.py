@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from .models import Movies
 import psycopg2
 from psycopg2 import sql
 from django.http import HttpResponse
+
 # Create your views here.
+
+
 def init_view(request):
 	db_params = {
 		'dbname' : settings.DATABASES['default']['NAME'],
@@ -20,7 +23,7 @@ def init_view(request):
 		cursor = connection.cursor()
 		#postgreSQL command that will be executed by cursor to creat a table
 		table_query = sql.SQL("""
-			CREATE TABLE IF NOT EXISTS ex02_movies (
+			CREATE TABLE IF NOT EXISTS ex04_movies (
 				title VARCHAR(64) NOT NULL UNIQUE,
 				episode_nb BIGINT PRIMARY KEY,
 				opening_crawl TEXT,
@@ -64,6 +67,59 @@ def display_view(request):
 	context = {
 		'records' : all_records,
 	}
-	return render(request, "ex02/index.html", context)
+	return render(request, "ex04/index.html", context)
+
+def remove_view(request):
+	if request.method == "POST":
+		films_list = request.POST.getlist('films')
+		for film in films_list:
+			movie = get_object_or_404(Movies, episode_nb=film)
+			movie.delete()
+		all_records = Movies.objects.all()
+		context = {
+			'records' : all_records,
+		}
+		return render(request, "ex04/index.html", context)
+			
+	else:
+		if not Movies.objects.exists():
+			return HttpResponse("No data available")
+		all_records = Movies.objects.all()
+		context = {
+			'records' : all_records,
+		}
+		return render(request, "ex04/deleteForm.html", context)
 
 
+# from django.shortcuts import render, get_object_or_404
+# from django.http import HttpResponse
+# from .models import Movies
+
+# def remove_view(request):
+#     if request.method == "POST":
+#         # Retrieve selected film episode numbers
+#         films_list = request.POST.getlist('films')
+        
+#         for film in films_list:
+#             # Remove each selected movie
+#             movie = get_object_or_404(Movies, episode_nb=film)
+#             movie.delete()
+
+#         # Fetch updated list of records
+#         all_records = Movies.objects.all()
+#         context = {
+#             'records': all_records,
+#         }
+#         return render(request, "ex04/index.html", context)
+        
+#     else:
+#         # Check if there are any records available
+#         if not Movies.objects.exists():
+#             return HttpResponse("No data available")
+        
+#         # Fetch all records for the form
+#         all_records = Movies.objects.all()
+#         context = {
+#             'records': all_records,
+#         }
+#         return render(request, "ex04/deleteForm.html", context)
