@@ -75,11 +75,12 @@ def remove_view(request):
 		for film in films_list:
 			movie = get_object_or_404(Movies, episode_nb=film)
 			movie.delete()
-		all_records = Movies.objects.all()
-		context = {
-			'records' : all_records,
-		}
-		return render(request, "ex04/index.html", context)
+		return redirect('display_view')
+		# all_records = Movies.objects.all()
+		# context = {
+		# 	'records' : all_records,
+		# }
+		# return render(request, "ex04/index.html", context)
 			
 	else:
 		if not Movies.objects.exists():
@@ -89,37 +90,3 @@ def remove_view(request):
 			'records' : all_records,
 		}
 		return render(request, "ex04/deleteForm.html", context)
-
-
-# from django.shortcuts import render, get_object_or_404
-# from django.http import HttpResponse
-# from .models import Movies
-
-# def remove_view(request):
-#     if request.method == "POST":
-#         # Retrieve selected film episode numbers
-#         films_list = request.POST.getlist('films')
-        
-#         for film in films_list:
-#             # Remove each selected movie
-#             movie = get_object_or_404(Movies, episode_nb=film)
-#             movie.delete()
-
-#         # Fetch updated list of records
-#         all_records = Movies.objects.all()
-#         context = {
-#             'records': all_records,
-#         }
-#         return render(request, "ex04/index.html", context)
-        
-#     else:
-#         # Check if there are any records available
-#         if not Movies.objects.exists():
-#             return HttpResponse("No data available")
-        
-#         # Fetch all records for the form
-#         all_records = Movies.objects.all()
-#         context = {
-#             'records': all_records,
-#         }
-#         return render(request, "ex04/deleteForm.html", context)
