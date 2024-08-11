@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Movies</title>
+	<style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        caption {
+            margin: 5px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+	<table>
+		<thead style="position: center;">
+			<th>Episode_nb</th>
+			<th>Title</th>
+			<th>Director</th>
+			<th>Producer</th>
+			<th>Opening_crawl</th>
+			<th>Release Date</th>
+		</thead>
+		{% for record in records %}
+		<tr>
+			<td> {{ record.episode_nb }} </td>
+			<td> {{ record.title }} </td>
+			<td> {{ record.director }} </td>
+			<td> {{ record.producer }} </td>
+			<td> {{ record.opening_crawl }} </td>
+			<td> {{ record.release_date }} </td>
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>
