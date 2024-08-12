@@ -7,45 +7,6 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-
-def init_view(request):
-	db_params = {
-		'dbname' : settings.DATABASES['default']['NAME'],
-		'user' : settings.DATABASES['default']['USER'],
-		'password' : settings.DATABASES['default']['PASSWORD'],
-		'host' : settings.DATABASES['default']['HOST'],
-		'port' : settings.DATABASES['default']['PORT'],
-	}
-	try:
-		#connect this django app with postgreSQL database
-		connection = psycopg2.connect(**db_params)
-		#creat a cursor that is the primary tool for executing SQL commands and queries
-		cursor = connection.cursor()
-		#postgreSQL command that will be executed by cursor to creat a table
-		table_query = sql.SQL("""
-			CREATE TABLE IF NOT EXISTS ex06_movies (
-				title VARCHAR(64) NOT NULL UNIQUE,
-				episode_nb BIGINT PRIMARY KEY,
-				opening_crawl TEXT,
-				director VARCHAR(32) NOT NULL,
-				producer VARCHAR(128) NOT NULL,
-				release_date DATE NOT NULL,
-				created DATE NOT NULL,
-				updated DATE NOT NULL
-			);
-
-		""")
-		# execute the table_query with cursor
-		cursor.execute(table_query)
-		# commit changes
-		connection.commit()
-		# close connection and cursor
-		cursor.close()
-		connection.close()
-		return HttpResponse("OK")
-	except Exception as e:
-		return HttpResponse(f"ERROR: {e}")
-
 def populate_view(request):
 	try:
 		records = [
@@ -61,7 +22,7 @@ def populate_view(request):
 		return HttpResponse("OK")
 	except Exception as e:
 		return HttpResponse(f"ERROR : {e}")
-
+	
 def display_view(request):
 	if not Movies.objects.exists():
 		return HttpResponse("No data available")
@@ -69,7 +30,7 @@ def display_view(request):
 	context = {
 		'records' : all_records,
 	}
-	return render(request, "ex06/index.html", context)
+	return render(request, "ex07/index.html", context)
 
 def update_view(request):
 	if request.method == "POST":
@@ -88,4 +49,4 @@ def update_view(request):
 		context = {
 			'records' : all_records,
 		}
-		return render(request, "ex06/updateForm.html", context)
+		return render(request, "ex07/updateForm.html", context)

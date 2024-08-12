@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Selection Form</title>
+</head>
+<body>
+    <h1>Select Films to be updated</h1>
+    
+    <form action="update" method="post">
+        {% csrf_token %}
+        <div>
+            <h2>Select Films to Update</h2>
+            <div id="films">
+                {% for record in records %}
+                    <div>
+                        <input type="checkbox" name="films" value="{{ record.episode_nb }}">
+                        <label for="{{ record.episode_nb }}">{{ record.title }}</label>
+                        <input type="text" name="opening_crawel_{{ record.episode_nb }}" placeholder="New opening crawl for {{ record.title }}">
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit">Update Films</button>
+        </div>
+    </form>
+    
+
+</body>
+</html>
