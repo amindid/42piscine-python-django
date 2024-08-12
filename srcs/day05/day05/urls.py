@@ -26,4 +26,5 @@ urlpatterns = [
     path('', include('ex05.urls')),
     path('', include('ex06.urls')),
     path('', include('ex07.urls')),
+    path('', include('ex08.urls')),
 ]
