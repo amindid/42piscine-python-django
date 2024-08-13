@@ -19,7 +19,7 @@ def init_view(request):
 		connection = psycopg2.connect(**db_params)
 		cursor = connection.cursor()
 		table1_creation_query = sql.SQL("""
-			CREATE TABLE IF NOT EXISTS ex08_planets (
+			CREATE TABLE IF NOT EXISTS ex08_planet (
 				id SERIAL PRIMARY KEY,
 				name VARCHAR(64) NOT NULL UNIQUE,
 				climate VARCHAR(255),
@@ -42,7 +42,7 @@ def init_view(request):
 				height INT,
 				mass REAL,
 				homeworld VARCHAR(64),
-				FOREIGN KEY (homeworld) REFERENCES "08_planets"(name)
+				FOREIGN KEY (homeworld) REFERENCES "ex08_planet"(name)
 			);
 		""")
 		cursor.execute(table1_creation_query)
@@ -57,7 +57,6 @@ def init_view(request):
 def populate_planets():
 	with open('/Users/aouchaad/Desktop/42piscine-python-django/srcs/day05/ex08/planets.csv', 'r') as file:
 		data = csv.reader(file, delimiter='\t')
-		next(data)
 		for row in data:
 			planet = Planet()
 			planet.name = row[0]
@@ -77,17 +76,21 @@ def populate_planets():
 def populate_people():
 	with open('/Users/aouchaad/Desktop/42piscine-python-django/srcs/day05/ex08/people.csv', 'r') as file:
 		data = csv.reader(file, delimiter='\t')
-		next(data)
 		for row in data:
 			people = People()
-			people.birth_year = row[0] or None
-			people.gender = row[1] or None
-			people.eye_color = row[2] or None
-			people.hair_color = row[3] or None
-			people.height = row[4] or None
-			people.mass = row[5] or None
-			people.homeworld = row[6] or None
-			people.save()
+			people.name = row[0] or None
+			people.birth_year = row[1] or None
+			people.gender = row[2] or None
+			people.eye_color = row[3] or None
+			people.hair_color = row[4] or None
+			people.height = row[5] or None
+			people.mass = row[6] or None
+			homeworld_name = row[7] or None
+			try:
+				people.homeworld = Planet.objects.get(name=homeworld_name)
+				people.save()
+			except Exception as e:
+				continue
 		file.close()
 
 def populate_view(request):
