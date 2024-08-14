@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-from .models import People, Planet
+from .models import People, Planets
 import psycopg2
 from psycopg2 import sql
 from django.http import HttpResponse
@@ -19,13 +19,13 @@ def init_view(request):
 		connection = psycopg2.connect(**db_params)
 		cursor = connection.cursor()
 		table1_creation_query = sql.SQL("""
-			CREATE TABLE IF NOT EXISTS ex08_planet (
+			CREATE TABLE IF NOT EXISTS ex08_planets (
 				id SERIAL PRIMARY KEY,
 				name VARCHAR(64) NOT NULL UNIQUE,
 				climate VARCHAR(255),
 				diameter INT,
 				orbital_period INT,
-				population INT,
+				population BIGINT,
 				rotation_period INT,
 				surface_water REAL,
 				terrain VARCHAR(128)
@@ -42,7 +42,7 @@ def init_view(request):
 				height INT,
 				mass REAL,
 				homeworld VARCHAR(64),
-				FOREIGN KEY (homeworld) REFERENCES "ex08_planet"(name)
+				FOREIGN KEY (homeworld) REFERENCES "ex08_planets"(name)
 			);
 		""")
 		cursor.execute(table1_creation_query)
@@ -58,7 +58,7 @@ def populate_planets():
 	with open('/Users/aouchaad/Desktop/42piscine-python-django/srcs/day05/ex08/planets.csv', 'r') as file:
 		data = csv.reader(file, delimiter='\t')
 		for row in data:
-			planet = Planet()
+			planet = Planets()
 			planet.name = row[0]
 			planet.climate = row[1] or None
 			planet.diameter = int(row[2]) if row[2] and row[2] != 'NULL' else None
@@ -83,14 +83,14 @@ def populate_people():
 			people.gender = row[2] or None
 			people.eye_color = row[3] or None
 			people.hair_color = row[4] or None
-			people.height = row[5] or None
-			people.mass = row[6] or None
+			people.height = int(row[5]) if row[5] and row[5] != 'NULL' else None
+			people.mass = float(row[6]) if row[6] and row[6] != 'NULL' else None
 			homeworld_name = row[7] or None
 			try:
-				people.homeworld = Planet.objects.get(name=homeworld_name)
-				people.save()
+				people.homeworld = Planets.objects.get(name=homeworld_name)
 			except Exception as e:
-				continue
+				people.homeworld = None
+			people.save()
 		file.close()
 
 def populate_view(request):
@@ -107,10 +107,10 @@ def display_view(request):
 	for character in characters:
 		print('inside loop')
 		try:
-			planet = Planet.objects.get(name=character.homeworld)
-			planets.append(planet)
+			planet = Planets.objects.get(name=character.homeworld)
 		except Exception as e:
-			return HttpResponse(f"ERROR : {e}")
+			planet = None
+		planets.append(planet)
 	context = {
 		'characters' : characters,
 		'planets' : planets

@@ -1,19 +1,21 @@
 from django.db import models
 
 # Create your models here.
-class Planet(models.Model):
+class Planets(models.Model):
 	id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=64, unique=True, null=False)
 	climate = models.CharField(max_length=255, null=True)
 	diameter = models.IntegerField(null=True)
 	orbital_period = models.IntegerField(null=True)
-	population = models.IntegerField(null=True)
+	population = models.BigIntegerField(null=True)
 	rotation_period = models.IntegerField(null=True)
 	surface_water = models.FloatField(null=True)
 	terrain = models.CharField(max_length=128, null=True)
 	
 	def __str__(self):
 		return self.name
+	class Meta:
+		db_table = 'ex08_planets'
 	
 
 class People(models.Model):
@@ -26,7 +28,7 @@ class People(models.Model):
 	height = models.IntegerField(null=True)
 	mass = models.FloatField(null=True)
 	homeworld = models.ForeignKey(
-		'Planet',
+		'Planets',
 		to_field='name',
 		null=True,
 		on_delete=models.SET_NULL,
@@ -36,3 +38,5 @@ class People(models.Model):
 
 	def __str__(self):
 		return self.name
+	class Meta:
+		db_table = 'ex08_people'
