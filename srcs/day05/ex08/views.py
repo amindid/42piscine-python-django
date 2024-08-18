@@ -102,10 +102,11 @@ def populate_view(request):
 		return HttpResponse(f"ERROR : {e}")
 
 def display_view(request):
+	if not People.objects.exists():
+		return HttpResponse("No data available")
 	characters = People.objects.all().order_by('name')
 	planets = []
 	for character in characters:
-		print('inside loop')
 		try:
 			planet = Planets.objects.get(name=character.homeworld)
 		except Exception as e:
