@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Search Results</title>
+</head>
+<body>
+	{% for char, movie in founded %}
+		<P>
+			{{ movie.title }} - {{ char.name }} - {{ char.gender }} - {{ char.homeworld.name }} - {{ char.homeworld.diameter }}
+		</p>
+	{% endfor %}
+</body>
+</html>

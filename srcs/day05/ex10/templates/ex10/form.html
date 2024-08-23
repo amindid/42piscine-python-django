@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Movies, Planets, and Characters</title>
+</head>
+<body>
+    <h1>Filter Movies, Planets, and Characters</h1>
+    <form method="POST" action="{% url 'main_view' %}">
+        {% csrf_token %}
+        <!-- Movies Minimum Release Date -->
+        <label for="min_release_date">Movies Minimum Release Date:</label>
+        <input type="date" id="min_release_date" name="min_release_date"><br><br>
+
+        <!-- Movies Maximum Release Date -->
+        <label for="max_release_date">Movies Maximum Release Date:</label>
+        <input type="date" id="max_release_date" name="max_release_date"><br><br>
+
+        <!-- Planet Diameter Greater Than -->
+        <label for="planet_diameter">Planet Diameter Greater Than:</label>
+        <input type="number" id="planet_diameter" name="planet_diameter"><br><br>
+
+        <!-- Character Gender -->
+        <label for="character_gender">Character Gender:</label>
+        <select id="character_gender" name="character_gender">
+            {% for gender in genders %}
+                <option value="{{ gender }}">{{ gender }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <input type="submit" value="Filter">
+    </form>
+</body>
+</html>
