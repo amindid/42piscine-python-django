@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <script>
+        function fetchName() {
+            window.location.reload();
+        }
+        // Update the name every second
+        setInterval(fetchName, 1000);
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <p>Hello <span id="username">{{ user }}</span> !</p>
+        </nav>
+    </header>
+    <main>
+        <h1>Life Pro Tips</h1>
+    </main>
+</body>
+</html>
