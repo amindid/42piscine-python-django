@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+	<style>
+		.alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+			display: none;
+			position: absolute;
+			top: 300px;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+		.form-container {
+			background-color: #ffffff;
+			padding: 20px 40px;
+			border-radius: 8px;
+			box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+			max-width: 400px;
+			width: 100%;
+		}
+		.form-container h2 {
+			margin-bottom: 20px;
+			font-size: 24px;
+			text-align: center;
+			color: #333333;
+		}
+		label {
+			display: block;
+			margin-bottom: 8px;
+			font-weight: bold;
+			color: #555555;
+		}
+		input[type="text"], input[type="password"] {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 20px;
+			border: 1px solid #cccccc;
+			border-radius: 5px;
+			box-sizing: 16px;
+			color: #333333;
+		}
+		input[type="text"]:focus,input[type="password"]:focus {
+			border-color: #66afe9;
+			outline: none;
+			box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+		}
+		button[type="submit"] {
+			width: 50%;
+			padding: 10px;
+			background-color: #007BFF;
+			border: none;
+			border-radius: 14px;
+			color: #ffffff;
+    		font-size: 16px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			display: block;
+   			margin: 20px auto; 
+		}
+		button[type="submit"]:hover {
+			background-color: #0056b3;
+		}
+		button[type="submit"]:active {
+			background-color: #004080;
+		}
+	</style>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>login</title>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+                <div id="message" class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+	<form action="login" method="post" class="form-container">
+		{% csrf_token %}
+		<h2>Login</h2>
+		<label for="username">Username</label>
+		<input type="text" id="username" name="username" placeholder="Enter your username" value="{{ request.POST.username }}" required>
+		<label for="password">Password</label>
+		<input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+		<button type="submit">Login</button>
+	</form>
+	<script>
+        // Show the message if it exists
+        const messageDiv = document.getElementById('message');
+        if (messageDiv) {
+            messageDiv.style.display = 'block'; // Show the message
+            // Hide the message after 3 seconds
+            setTimeout(function() {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
