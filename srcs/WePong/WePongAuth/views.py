@@ -7,3 +7,6 @@ def login(request):
 
 def homepage(request):
 	return render(request, 'WePongAuth/homepage.html')
+
+def registration(request):
+	return render(request, 'WePongAuth/registration.html')
