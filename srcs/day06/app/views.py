@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate,logout, login as auth_login 
 import time
 import random
 from django.conf import settings
@@ -48,10 +48,16 @@ def registration(request):
 	return render(request, 'app/registration.html')
 
 def homepage(request):
+	if request.user.is_authenticated:
+		return render(request, 'app/homepage.html',{'user': request.user.username, 'bool' : True})
 	current_time = time.time()
 	if 'username' not in request.session or current_time - request.session['creation_time'] > 5:
 		request.session['username'] = random.choice(settings.USER_NAMES)
 		request.session['creation_time'] = current_time
 		request.session.modified = True
 	user = request.session['username']
-	return render(request, 'app/homepage.html',{'user': user, 'time': request.session['creation_time']})
+	return render(request, 'app/homepage.html',{'user': user, 'bool': False})
+
+def logout_view(request):
+	logout(request)
+	return redirect('homepage')

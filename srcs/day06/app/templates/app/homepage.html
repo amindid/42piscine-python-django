@@ -106,8 +106,12 @@
         <nav>
             <p>Hello <span id="username">{{ user }}</span> !</p>
             <a href="/">LifeTips</a>
-            <a href="login">Login</a>
-            <a href="registration">Register</a>
+            {% if bool %}
+                <a href="logout_view">Log Out</a>
+            {% else %}
+                <a href="login">Login</a>
+                <a href="registration">Register</a>
+            {% endif %}
         </nav>
     </header>
     <main>
