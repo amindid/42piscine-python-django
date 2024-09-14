@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import certifi
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,3 +125,24 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import ssl
+from smtplib import SMTP
+
+# ssl_context = ssl.create_default_context(cafile='/Users/aouchaad/Desktop/cacert.pem')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'wepong10auth@gmail.com'
+EMAIL_HOST_PASSWORD = 'vxhqismlzdvudgji'
+# DEFAULT_FROM_EMAIL = 'wepong10auth@gmail.com'
+# SSL_CERT_FILE = certifi.where()
+
+os.environ['SSL_CERT_FILE'] = certifi.where()
+
+# context = ssl._create_unverified_context()
+
+# server = SMTP(EMAIL_HOST, EMAIL_PORT)
+# ssl_context = ssl.create_default_context(cafile=certifi.where())

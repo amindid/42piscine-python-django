@@ -1,0 +1,16 @@
+{% extends 'WePongAuth/base.html' %}
+
+{% block content %}
+
+{% load static %}
+<a href="/" ><img src='{% static "WePongAuth/images/arrow.svg" %}' alt="" class="goBackArrow"></a>
+<div id="root" class="box">
+    <div class="ponglogo">
+        <img src='{% static "WePongAuth/images/Pong.svg" %}'>
+    </div>
+    <p style="color: white;">
+		email confirmation was sent to email@example.com , please confirm your email
+	</p>
+	<button class="button">Cancel</button>
+</div>
+{% endblock %}

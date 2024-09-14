@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WePong</title>
+    {% load static %}
+    <script src='{% static "WePongAuth/js/router.js" %}'></script>
+ 
+    <script>
+            document.addEventListener("DOMContentLoaded", function() {
+            // Set the background images using Django's static paths
+            const image1 = "{% static 'WePongAuth/images/homepageBackground.svg' %}";
+            const image2 = "{% static 'WePongAuth/images/registrationBackground.svg' %}";
+
+            // Function to set background based on URL
+            function setBodyBackground() {
+                const path = window.location.pathname;  // Get the current path
+                const body = document.body;  // Get the body element
+
+                if (path === "/") {
+                    body.style.backgroundImage = `url(${image1})`;  // Use image1 if the URL is "/"
+                } else {
+                    body.style.backgroundImage = `url(${image2})`;  // Use image2 if the URL is not "/"
+                }
+            }
+
+            // Initial check for background
+            setBodyBackground();
+
+            // Listen to history changes for back/forward navigation
+            window.onpopstate = function() {
+                setBodyBackground();  // Re-check the URL when navigating back/forward
+            };
+
+            // Intercept SPA internal link clicks to change URL and background
+            document.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    const newUrl = this.href;
+                    
+                    // Update the browser URL without reloading the page
+                    history.pushState({}, "", newUrl);
+                    
+                    // Trigger background change after the URL change
+                    setBodyBackground();
+                });
+            });
+
+            // Override link clicks on dynamically added links (optional)
+            document.addEventListener("click", function(event) {
+                const target = event.target.closest("a");
+                if (target && target.href) {
+                    event.preventDefault();
+                    history.pushState({}, "", target.href);
+                    setBodyBackground();
+                }
+            });
+        });
+
+    </script>
+    <link rel="stylesheet" href="{% static 'WePongAuth/css/authentication.css' %}">
+</head>
+<body style="background-image: url('{% static 'WePongAuth/images/homepageBackground.svg' %}');">
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+                <div id="message" class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div id="root" class="same-style">
+    {% block content %}
+    {% endblock %}
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+    function setupTogglePassword() {
+        const passwordInput = document.getElementById('password');
+        const eyeIconPassword = document.getElementById('eye-icon');
+
+        if (passwordInput && eyeIconPassword) {
+            eyeIconPassword.addEventListener('click', function() {
+                const currentType = passwordInput.getAttribute('type');
+                if (currentType === 'password') {
+                    passwordInput.setAttribute('type', 'text');
+                    eyeIconPassword.src = "{% static 'WePongAuth/images/eye.svg' %}";
+                    eyeIconPassword.alt = "Hide password";
+                } else {
+                    passwordInput.setAttribute('type', 'password');
+                    eyeIconPassword.src = "{% static 'WePongAuth/images/closed-eye.svg' %}";
+                    eyeIconPassword.alt = "Show password";
+                }
+            });
+        }
+    }
+
+    // Initialize the password field toggle on page load
+    setupTogglePassword();
+
+    // Handle SPA content updates
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                // Reinitialize the password toggle when new content is added
+                setupTogglePassword();
+            }
+        });
+    });
+
+    // Observe the document body for changes
+    observer.observe(document.body, { childList: true, subtree: true });
+});
+
+
+    </script>
+    <script>
+        // Show the message if it exists
+        const messageDiv = document.getElementById('message');
+        if (messageDiv) {
+            messageDiv.style.display = 'block'; // Show the message
+            // Hide the message after 3 seconds
+            setTimeout(function() {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
